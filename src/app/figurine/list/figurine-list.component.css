@@ -1,0 +1,28 @@
+:host {
+  display: block;
+  margin-top: 1rem;
+}
+
+mat-card {
+  margin-top: 1rem;
+  max-width: 20rem;
+  margin: 10px;
+}
+
+mat-accordion {
+  width: 100%;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+}
+
+.figurine-image {
+  max-width: 100%;
+  height: auto;
+  size: cover;
+}
+
+.figurine-image img {
+  max-width: 100%;
+  height: auto;
+}

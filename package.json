@@ -1,6 +1,7 @@
 {
   "name": "dark-castle-web",
   "version": "0.0.0",
+  "author": "SCH",
   "scripts": {
     "ng": "ng",
     "start": "ng serve",
@@ -15,9 +16,11 @@
     "@angular/compiler": "^14.2.0",
     "@angular/core": "^14.2.0",
     "@angular/forms": "^14.2.0",
+    "@angular/material": "^14.2.7",
     "@angular/platform-browser": "^14.2.0",
     "@angular/platform-browser-dynamic": "^14.2.0",
     "@angular/router": "^14.2.0",
+    "ngx-color-picker": "^13.0.0",
     "rxjs": "~7.5.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.11.4"

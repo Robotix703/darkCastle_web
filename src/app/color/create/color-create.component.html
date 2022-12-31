@@ -1,0 +1,72 @@
+<h2>Création Couleur</h2>
+
+<!--Balise permettant l'utilisation du module card-->
+<mat-card>
+  <!--Utilisation de la balise Form pour simplifier la récupération d'informations par Angular-->
+  <!--On indique l'opération à faire lors de l'événement submit-->
+  <!--On passe en paramètre les données du formulaire géré par angular via ngForm-->
+  <form [formGroup]="formulaire" (submit)="onSaveColor()">
+    <!--Nom-->
+    <mat-form-field>
+      <input matInput formControlName="name" type="text" placeholder="Nom">
+      <mat-error *ngIf="formulaire.get('name')?.invalid">Entrez un nom</mat-error>
+    </mat-form-field>
+
+    <!--ColorCode-->
+    <mat-form-field>
+      <input matInput formControlName="colorCode" [(colorPicker)]="color.name" [style.background]="color" (colorPickerChange)="onColorPichupChange($event)"/>
+      <mat-error *ngIf="formulaire.get('colorCode')?.invalid">Entrez un code couleur</mat-error>
+    </mat-form-field>
+
+    <!--ToBuy-->
+    <mat-checkbox class="example-margin" formControlName="toBuy">A acheter</mat-checkbox>
+
+    <hr>
+
+    <!--Gamme-->
+    <mat-form-field>
+      <input type="text" placeholder="Gamme" matInput
+        formControlName="gamme" [matAutocomplete]="autoGamme">
+      <mat-autocomplete autoActiveFirstOption #autoGamme="matAutocomplete">
+        <mat-option *ngFor="let gamme of filteredGamme | async" [value]="gamme">
+          {{gamme}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!--Type-->
+    <mat-form-field>
+      <input type="text" placeholder="Type" aria-label="Number" matInput
+        formControlName="type" [matAutocomplete]="autoType">
+      <mat-autocomplete autoActiveFirstOption #autoType="matAutocomplete">
+        <mat-option *ngFor="let type of filteredTypes | async" [value]="type">
+          {{type}}
+        </mat-option>
+      </mat-autocomplete>
+    </mat-form-field>
+
+    <!--Drawer name-->
+    <input type="text" style="margin-bottom: 10px;" placeholder="Nom Tiroir" aria-label="Number" matInput
+      formControlName="drawerName" [matAutocomplete]="autoDrawer">
+    <mat-autocomplete autoActiveFirstOption #autoDrawer="matAutocomplete" (optionSelected)="onChangeDrawer($event)">
+      <mat-option *ngFor="let name of filteredDrawers | async" [value]="name">
+        {{name}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <!--Slot-->
+    <input type="text" style="margin-bottom: 10px;" placeholder="Emplacement Peinture" aria-label="Number" matInput
+      formControlName="colorSlot" [matAutocomplete]="autoSlot">
+    <mat-autocomplete autoActiveFirstOption #autoSlot="matAutocomplete">
+      <mat-option *ngFor="let slot of filteredSlots | async" [value]="slot">
+        {{slot}}
+      </mat-option>
+    </mat-autocomplete>
+
+    <hr>
+
+    <!--Imput-->
+    <button mat-raised-button color="primary" type="submit">Sauvegarder Couleur
+    </button>
+  </form>
+</mat-card>

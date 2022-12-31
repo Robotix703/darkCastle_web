@@ -1,0 +1,102 @@
+<div style="text-align: center;">
+  <!--Recherche figurine-->
+  <mat-form-field appearance="fill">
+    <mat-label>Nom Couleur</mat-label>
+    <input
+      matInput
+      placeholder="Recherche"
+      id="search"
+      (keyup)="search($event)">
+    <mat-icon matSuffix>search</mat-icon>
+  </mat-form-field>
+
+  <!--Filtre-->
+  <button type="button" mat-raised-button color="accent" style="margin: 1rem;" (click)="drawer.toggle()">
+    Filtres
+  </button>
+
+  <!--Création couleur-->
+  <a mat-raised-button color="primary" [routerLink]="['/color/create']" style="margin: 1rem;">Ajouter Couleur</a>
+
+  <!--Nombre d'items-->
+  <mat-form-field appearance="fill" style="margin: 1rem;">
+    <mat-label>Nombre d'items</mat-label>
+    <mat-select (selectionChange)="updateLimit($event.value)" [(value)]="l_colorLimit">
+      <mat-option value="25">25</mat-option>
+      <mat-option value="50">50</mat-option>
+      <mat-option value="100" default>100</mat-option>
+      <mat-option value="150">150</mat-option>
+    </mat-select>
+  </mat-form-field>
+
+  <!--Equivalent-->
+  <a mat-raised-button color="link" href="https://www.dakkadakka.com/wiki/en/Paint_Range_Compatibility_Chart" target="_blank" style="margin: 1rem;">Equivalent Couleur</a>
+
+  <!--Indication du nombre de couleurs-->
+  <h1 style="margin: 1rem;">Nombre de couleurs : {{totalColors}}</h1>
+</div>
+
+<mat-drawer-container class="container" autosize>
+  <mat-accordion *ngIf="colors.length > 0">
+    <!--Conteneur des tuiles par figurines-->
+    <mat-card *ngFor="let color of colors" [ngStyle]="{'background-color': color.backgroundToBuy}">
+      <!--Header-->
+      <mat-card-title style="margin-bottom: 1rem;">
+        {{ color.name }}
+        <span class="dot" [ngStyle]="{'background-color': color.colorCode}"></span>
+      </mat-card-title>
+      <!--Gamme et type-->
+      <mat-dialog-content>
+        <div class="row">
+          <div>
+            {{ color.gamme }} - {{ color.type }}
+          </div>
+          <div>
+            {{ color.drawerName }} - ({{ color.positionX }} : {{ color.positionY }})
+          </div>
+          <div>
+            <hr>
+            <button mat-button color="primary" (click)="buyColor(color)">Acheté</button>
+            <button mat-button color="warn" (click)="onDelete(color)">Delete</button>
+          </div>
+        </div>
+      </mat-dialog-content>
+    </mat-card>
+  </mat-accordion>
+
+  <p class="info-text mat-body-1" *ngIf="colors.length == 0">Aucune Couleurs</p>
+
+  <!--Remplissage-->
+  <mat-accordion *ngIf="colors.length <= 12">
+    <div style="visibility: hidden;">
+      <p style="height: 300px;">REMPLISSAGE</p>
+    </div>
+  </mat-accordion>
+
+  <!--Sidebare-->
+  <mat-drawer #drawer class="sidenav-content" mode="side">
+    <!--Gamme-->
+    <h4>Gamme</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Selectionner une gamme</mat-label>
+      <mat-select #gammeValue (selectionChange)="selectGamme($event.value)">
+        <mat-option value="tout">Tout</mat-option>
+        <mat-option *ngFor="let gamme of gammeList" [value]="gamme">{{gamme}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--Type-->
+    <h4>Type</h4>
+    <mat-form-field appearance="fill">
+      <mat-label>Selectionner une type</mat-label>
+      <mat-select #typeValue (selectionChange)="selectType($event.value)">
+        <mat-option value="tout">Tout</mat-option>
+        <mat-option *ngFor="let color of colorList" [value]="color">{{color}}</mat-option>
+      </mat-select>
+    </mat-form-field>
+
+    <!--ToBuy-->
+    <h4>Filtre</h4>
+    <mat-checkbox class="example-margin" (change)="selectToBuy($event)">A acheter</mat-checkbox>
+  </mat-drawer>
+</mat-drawer-container>

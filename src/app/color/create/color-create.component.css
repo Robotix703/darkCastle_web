@@ -1,0 +1,11 @@
+mat-form-field {
+  margin-right: 1rem;
+}
+
+mat-autocomplete {
+  margin-bottom: 1rem;
+}
+
+.example-margin {
+  margin: 0 10px;
+}
